@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=1.0" /> 
+	<title>mobile</title>
+</head>
+<link rel="stylesheet" type="text/css" href="./src/lib/weui.css"/>
+<link rel="stylesheet" type="text/css" href="./src/lib/weui.min.css"/>
+<script type="text/javascript" src="./src/lib/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="./src/lib/zepto.js"></script>
+<script type="text/javascript" src="./src/lib/fastclick.js"></script>
+<script type="text/javascript" src="./src/js/jquery-extend.js"></script>
+<script type="text/javascript" src="./src/js/toptip.js"></script>
+<script type="text/javascript" src="./src/js/toast.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<body>
+
+ <div class="weui-msg__text-area">
+    <h2 class="weui-msg__title">温馨提示</h2>
+    <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，请联系<a tel="1885285096">相关管理员</a></p>
+</div>
+
+<form>
+  <div class="weui-cells weui-cells_form">
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" name="username" type="text" value=""/>
+    </div>
+  </div>
+
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="" class="weui-label">班级</label></div>
+    <div class="weui-cell__bd">
+     <input class="weui-input" name="class" type="text" value="1401"/>
+    </div>
+  </div>
+
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="class" class="weui-label">联系方式</label></div>
+    <div class="weui-cell__bd">
+     <input class="weui-input" name="phone" type="number" pattern="[0-9]*" value="" />
+    </div>
+  </div>
+
+   <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="" class="weui-label">宿舍地址</label></div>
+    <div class="weui-cell__bd">
+     <input class="weui-input" type="text" name="address" placeholder="" value="C-11-412"/>
+    </div>
+  </div>
+</div>
+
+<div class="weui-cells__title">是否开启通知</div>
+<div class="weui-cells weui-cells_form">
+  <div class="weui-cell weui-cell_switch">
+    <div class="weui-cell__bd">消息通知</div>
+    <div class="weui-cell__ft">
+      <input class="weui-switch" id="switch" name="notice" value="true" type="checkbox" checked="true"/>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#switch").on('change',function(){
+    console.log(this.checked)
+  })
+</script>
+
+<div class="weui-cells__title">维修内容</div>
+<div class="weui-cells weui-cells_form">
+  <div class="weui-cell">
+    <div class="weui-cell__bd">
+      <textarea name="content" class="weui-textarea" placeholder="请简单描述维修内容" rows="4"></textarea>    
+    </div>
+  </div>
+</div>
+
+ <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+      <a href="javascript:;" type="submit" id="submitBtn" class="weui-btn weui-btn_plain-primary">提交</a>     
+    </p>
+  </div>
+
+</form>
+<script type="text/javascript">
+  $('#submitBtn').on('click',function(){
+        let dataArray = $("form").serializeArray();
+        let data ={};
+        for(item of dataArray){
+          data[item.name] = item.value
+        }
+         if (!data.content) {
+         $.toptip('请输入维修内容','warning');
+          return false;
+        }
+        $.toast("操作成功");
+        window.close()
+    })
+</script>
+
+</body>
+<style type="text/css">
+  .bg-danger{
+    background-color: #f63832;
+  }
+  .bg-warning{
+    background-color: #ff6600;
+  }
+</style>
+</html>

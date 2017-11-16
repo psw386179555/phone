@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=1.0" /> 
+	<title>mobile</title>
+</head>
+<link rel="stylesheet" type="text/css" href="./src/lib/weui.css"/>
+<link rel="stylesheet" type="text/css" href="./src/lib/weui.min.css"/>
+<script type="text/javascript" src="./src/lib/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="./src/lib/zepto.js"></script>
+<script type="text/javascript" src="./src/lib/fastclick.js"></script>
+<script type="text/javascript" src="./src/js/jquery-extend.js"></script>
+<script type="text/javascript" src="./src/js/toptip.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<style type="text/css">
+  .weui-msg__icon-area img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+</style>
+<body>
+
+<div class="weui-msg">
+  <div class="weui-msg__icon-area"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1822899106,40471411&fm=27&gp=0.jpg"></div>
+  <div class="weui-msg__text-area">
+    <h2 class="weui-msg__title">SvenBarnett同学，您好！</h2>
+    <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p>
+  </div> 
+</div>
+
+<form>
+  <div class="weui-cells weui-cells_form">
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" name="username" type="text" value=""/>
+    </div>
+  </div>
+
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="" class="weui-label">班级</label></div>
+    <div class="weui-cell__bd">
+     <input class="weui-input" name="class" type="text" value=""/>
+    </div>
+  </div>
+
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="class" class="weui-label">联系方式</label></div>
+    <div class="weui-cell__bd">
+     <input class="weui-input" name="phone" type="number" pattern="[0-9]*" value="" />
+    </div>
+  </div>
+
+   <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="address" class="weui-label">宿舍地址</label></div>
+    <div class="weui-cell__bd" id="showPicker">    
+        <input class="weui-input" name="address-a" id="a" type="text" value=""/>
+    </div>
+  </div>
+
+   <div class="weui-cell">
+    <div class="weui-cell__hd"><label for="address" class="weui-label">寝室号</label></div>
+    <div class="weui-cell__bd">    
+        <input class="weui-input" name="address-room" id="a" type="text" value=""/>
+    </div>
+  </div>
+</div>
+
+ <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+      <a href="javascript:;" type="submit" id="submitBtn" class="weui-btn weui-btn_primary">绑定</a>     
+    </p>
+  </div>
+
+</form>
+<script type="text/javascript" class="picker js_show">
+  let room1 =[
+        {
+            label: 'A区',
+            value: 0
+        }, {
+            label: 'B区',
+            value: 1
+        }, {
+            label: 'C区',
+            value: 2
+        },{
+            label: 'D区',
+            disabled: true,
+            value: 3
+        }, {
+            label: 'E区',
+            value: 4
+        }, {
+            label: 'F区',
+            value: 5
+        }, {
+            label: 'G区',
+            value: 6
+        }, {
+            label: 'H区',
+            value: 7
+        }
+  ];
+  let room2 =[
+        {
+            label: '1栋',
+            value: 0
+        }, {
+            label: '2栋',
+            value: 1
+        }, {
+            label: '3栋',
+            value: 2
+        },{
+            label: '4栋',
+            disabled: true,
+            value: 3
+        }, {
+            label: '5栋',
+            value: 4
+        }, {
+            label: '6栋',
+            value: 5
+        }, {
+            label: '7栋',
+            value: 6
+        }, {
+            label: '8栋',
+            value: 7
+        }, {
+            label: '9栋',
+            value: 8
+        }, {
+            label: '10栋',
+            value: 9
+        }, {
+            label: '11栋',
+            value: 10
+        }
+  ]
+    $('#showPicker').on('click', function () {
+        weui.picker(
+          room1,
+          room2, {
+            onChange: function (result) {
+                // console.log(result);
+            },
+            onConfirm: function (result) {
+                // console.log(result);
+                let val = room1[result[0]].label +'-'+ room2[result[1]].label
+                $("#a").val( val);
+            }
+        });
+    });
+   
+    $('#submitBtn').on('click',function(){
+        let dataArray = $("form").serializeArray();
+        let data ={};
+        for(item of dataArray){
+          data[item.name] = item.value
+        }        
+        if (!data.username) {
+         $.toptip('请输入用户名','warning');
+          return false;
+        }
+        if (!data.class) {
+         $.toptip('请输入班级','warning');
+          return false;
+        }
+         if (!data.phone) {
+         $.toptip('请输入联系方式','warning');
+          return false;
+        }
+         if (!data['address-a']) {
+         $.toptip('请输入宿舍区域','warning');
+          return false;
+        }
+         if (!data['address-room']) {
+         $.toptip('请输入宿舍号','warning');
+          return false;
+        }
+
+        console.log(data);
+    })
+  </script>
+
+</body>
+<style type="text/css">
+  .bg-danger{
+    background-color: #f63832;
+  }
+  .bg-warning{
+    background-color: #ff6600;
+  }
+</style>
+</html>
